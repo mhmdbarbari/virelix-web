@@ -1,0 +1,8 @@
+node_modules
+dist
+.vite
+.vite-temp
+backend/node_modules
+backend/.env
+.DS_Store
+*.log
