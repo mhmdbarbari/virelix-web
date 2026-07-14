@@ -96,7 +96,10 @@ async function connectDB() {
 }
 connectDB()
 
-app.use(cors())
+// set ALLOWED_ORIGIN in Render's env vars to your live frontend domain once it's live
+// (e.g. https://virelix.com) to stop other sites from calling this API; '*' allows any origin
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*'
+app.use(cors({ origin: ALLOWED_ORIGIN === '*' ? true : ALLOWED_ORIGIN }))
 app.use(express.json({ limit: '32kb' }))
 
 // --- naive per-IP rate limit: max 5 messages per 10 minutes ---

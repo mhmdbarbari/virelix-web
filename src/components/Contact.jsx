@@ -4,6 +4,10 @@ import { useLanguage } from '../lib/i18n'
 
 const MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=King+Hussein+Business+Park,+Amman,+Jordan'
 
+// in dev this stays empty so Vite's /api proxy (vite.config.js) handles it;
+// in production set VITE_API_URL to the deployed backend's origin
+const API_URL = import.meta.env.VITE_API_URL || ''
+
 // structural metadata (icon/link) paired by index with the translated title/value
 const INFO_META = [
   { icon: '✉', href: 'mailto:virelixinfo@gmail.com' },
@@ -47,7 +51,7 @@ export default function Contact() {
     setSending(true)
     setServerError('')
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
