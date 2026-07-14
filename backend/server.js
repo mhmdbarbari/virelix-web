@@ -1,3 +1,7 @@
+// load backend/.env when it exists (local dev); on hosts like Render the
+// real environment variables are injected directly, so this just no-ops
+try { process.loadEnvFile() } catch { /* no .env file present — that's fine */ }
+
 const express = require('express')
 const cors = require('cors')
 const { MongoClient } = require('mongodb')
