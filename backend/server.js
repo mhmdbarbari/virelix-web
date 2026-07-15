@@ -22,8 +22,17 @@ const GMAIL_USER = process.env.GMAIL_USER || ''
 const GMAIL_APP_PASSWORD = (process.env.GMAIL_APP_PASSWORD || '').replace(/\s/g, '')
 const NOTIFY_TO = process.env.NOTIFY_TO || GMAIL_USER
 const mailEnabled = GMAIL_USER && GMAIL_APP_PASSWORD && !GMAIL_APP_PASSWORD.includes('PASTE')
+// explicit host/port (587, STARTTLS) instead of the 'gmail' shorthand (465, implicit TLS) —
+// some hosts' outbound network is flaky against 465 and times out
 const mailer = mailEnabled
-  ? nodemailer.createTransport({ service: 'gmail', auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD } })
+  ? nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
+      connectionTimeout: 15000,
+      greetingTimeout: 15000,
+    })
   : null
 if (!mailEnabled) console.log('email notifications OFF (set GMAIL_APP_PASSWORD in .env to enable)')
 
