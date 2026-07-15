@@ -5,7 +5,6 @@ try { process.loadEnvFile() } catch { /* no .env file present — that's fine */
 const express = require('express')
 const cors = require('cors')
 const { MongoClient } = require('mongodb')
-const nodemailer = require('nodemailer')
 
 const app = express()
 const PORT = process.env.PORT || 5001
@@ -17,31 +16,21 @@ const DB_NAME = process.env.MONGODB_DB || 'virelix'
 const client = new MongoClient(MONGODB_URI, { serverSelectionTimeoutMS: 6000 })
 let contacts = null // set once connected; endpoint answers 503 until then
 
-// --- email notifications (optional: activates when GMAIL_APP_PASSWORD is set) ---
-const GMAIL_USER = process.env.GMAIL_USER || ''
-const GMAIL_APP_PASSWORD = (process.env.GMAIL_APP_PASSWORD || '').replace(/\s/g, '')
-const NOTIFY_TO = process.env.NOTIFY_TO || GMAIL_USER
-const mailEnabled = GMAIL_USER && GMAIL_APP_PASSWORD && !GMAIL_APP_PASSWORD.includes('PASTE')
-// explicit host/port (587, STARTTLS) instead of the 'gmail' shorthand (465, implicit TLS) —
-// some hosts' outbound network is flaky against 465 and times out
-const mailer = mailEnabled
-  ? nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
-      connectionTimeout: 15000,
-      greetingTimeout: 15000,
-    })
-  : null
-if (!mailEnabled) console.log('email notifications OFF (set GMAIL_APP_PASSWORD in .env to enable)')
+// --- email notifications via Resend's HTTPS API (activates when RESEND_API_KEY is set) ---
+// SMTP to Gmail from cloud hosts (Render/Railway/Heroku) routinely times out — their
+// outbound network doesn't reliably reach Google's mail servers. An HTTPS API avoids
+// that entirely since port 443 is never blocked.
+const RESEND_API_KEY = process.env.RESEND_API_KEY || ''
+const NOTIFY_TO = process.env.NOTIFY_TO || process.env.GMAIL_USER || ''
+const mailEnabled = !!RESEND_API_KEY && !!NOTIFY_TO
+if (!mailEnabled) console.log('email notifications OFF (set RESEND_API_KEY and NOTIFY_TO in .env to enable)')
 
 function esc(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
 }
 
 function notifyByEmail(row) {
-  if (!mailer) return
+  if (!mailEnabled) return
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;border:1px solid #e2e2ef;border-radius:12px;overflow:hidden">
       <div style="background:#0a0a12;padding:22px 26px">
@@ -58,13 +47,21 @@ function notifyByEmail(row) {
         Reply to this email to answer ${esc(row.name)} directly.
       </div>
     </div>`
-  mailer.sendMail({
-    from: `"VIRELIX Website" <${GMAIL_USER}>`,
-    to: NOTIFY_TO,
-    replyTo: `"${row.name}" <${row.email}>`,
-    subject: `📩 New message from ${row.name} — VIRELIX website`,
-    html,
-  }).then(() => console.log(`notification email sent for ${row.email}`))
+  fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: 'VIRELIX Website <onboarding@resend.dev>',
+      to: NOTIFY_TO,
+      reply_to: row.email,
+      subject: `📩 New message from ${row.name} — VIRELIX website`,
+      html,
+    }),
+  })
+    .then(async res => {
+      if (!res.ok) throw new Error(`${res.status} ${await res.text()}`)
+      console.log(`notification email sent for ${row.email}`)
+    })
     .catch(err => console.error('email notify failed:', err.message))
 }
 
