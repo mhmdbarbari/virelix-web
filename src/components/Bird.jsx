@@ -1,14 +1,48 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { gsap, RM } from '../lib/motion'
 import { useLanguage } from '../lib/i18n'
-import owlVideo from '../assets/owl-alpha.webm'
-import owlImage from '../assets/owl-alpha.png'
+import owlMatte from '../assets/owl-matte.mp4'
 
-// Safari (desktop and iOS) doesn't reliably support alpha-channel WebM video —
-// it falls back to the video's own opaque background instead of transparency.
-// Only real fix without Apple's own encoding tools: use the transparent PNG there.
-const isSafari = typeof navigator !== 'undefined' &&
-  /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+// owl-matte.mp4 is a plain (non-alpha) H.264 video: each frame is the owl's
+// color on the left half and a white/black alpha matte on the right half.
+// No video codec anywhere reliably supports real alpha channels across every
+// browser (Safari in particular doesn't), so instead we composite real
+// per-pixel transparency ourselves on a canvas every frame — this works
+// identically on every browser since it never depends on codec-level alpha.
+function AlphaVideo({ className }) {
+  const videoRef = useRef(null)
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const video = videoRef.current, canvas = canvasRef.current
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
+    let raf, alive = true
+
+    const draw = () => {
+      if (!alive) return
+      if (video.readyState >= 2) {
+        const w = video.videoWidth / 2, h = video.videoHeight
+        if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h }
+        ctx.drawImage(video, 0, 0, w, h, 0, 0, w, h)
+        const frame = ctx.getImageData(0, 0, w, h)
+        ctx.drawImage(video, w, 0, w, h, 0, 0, w, h)
+        const matte = ctx.getImageData(0, 0, w, h)
+        for (let i = 0; i < frame.data.length; i += 4) frame.data[i + 3] = matte.data[i]
+        ctx.putImageData(frame, 0, 0)
+      }
+      raf = requestAnimationFrame(draw)
+    }
+    raf = requestAnimationFrame(draw)
+    return () => { alive = false; cancelAnimationFrame(raf) }
+  }, [])
+
+  return (
+    <>
+      <video ref={videoRef} src={owlMatte} autoPlay muted loop playsInline style={{ display: 'none' }} />
+      <canvas ref={canvasRef} className={className} />
+    </>
+  )
+}
 
 // flight waypoints: [xFrac, yFrac] along scroll progress.
 // Fractions outside 0..1 sit fully off-screen, so the owl flies out past one
@@ -109,9 +143,7 @@ export default function Bird({ active, gone }) {
 
   return (
     <div id="bird" ref={ref}>
-      {isSafari
-        ? <img className="owl-img owl-img-breathe" src={owlImage} alt="" />
-        : <video className="owl-img" src={owlVideo} autoPlay muted loop playsInline />}
+      <AlphaVideo className="owl-img" />
     </div>
   )
 }
