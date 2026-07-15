@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { gsap, RM } from '../lib/motion'
 import { useLanguage } from '../lib/i18n'
-import owlVideo from '../assets/owl-alpha.webm'
+import owlImage from '../assets/owl-alpha.png'
 
 // flight waypoints: [xFrac, yFrac] along scroll progress.
 // Fractions outside 0..1 sit fully off-screen, so the owl flies out past one
@@ -102,7 +102,7 @@ export default function Bird({ active, gone }) {
 
   return (
     <div id="bird" ref={ref}>
-      <video className="owl-video" src={owlVideo} autoPlay muted loop playsInline />
+      <img className="owl-img" src={owlImage} alt="" />
     </div>
   )
 }
