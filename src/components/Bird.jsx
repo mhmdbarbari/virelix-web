@@ -17,18 +17,23 @@ function AlphaVideo({ className }) {
     const video = videoRef.current, canvas = canvasRef.current
     const ctx = canvas.getContext('2d', { willReadFrequently: true })
     let raf, alive = true
+    video.play?.().catch(() => {}) // autoplay can be rejected until a user gesture on some browsers
 
     const draw = () => {
       if (!alive) return
       if (video.readyState >= 2) {
-        const w = video.videoWidth / 2, h = video.videoHeight
-        if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h }
-        ctx.drawImage(video, 0, 0, w, h, 0, 0, w, h)
-        const frame = ctx.getImageData(0, 0, w, h)
-        ctx.drawImage(video, w, 0, w, h, 0, 0, w, h)
-        const matte = ctx.getImageData(0, 0, w, h)
-        for (let i = 0; i < frame.data.length; i += 4) frame.data[i + 3] = matte.data[i]
-        ctx.putImageData(frame, 0, 0)
+        try {
+          const w = video.videoWidth / 2, h = video.videoHeight
+          if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h }
+          ctx.drawImage(video, 0, 0, w, h, 0, 0, w, h)
+          const frame = ctx.getImageData(0, 0, w, h)
+          ctx.drawImage(video, w, 0, w, h, 0, 0, w, h)
+          const matte = ctx.getImageData(0, 0, w, h)
+          for (let i = 0; i < frame.data.length; i += 4) frame.data[i + 3] = matte.data[i]
+          ctx.putImageData(frame, 0, 0)
+        } catch {
+          // transient decode hiccup — skip this frame rather than killing the loop
+        }
       }
       raf = requestAnimationFrame(draw)
     }
@@ -38,7 +43,17 @@ function AlphaVideo({ className }) {
 
   return (
     <>
-      <video ref={videoRef} src={owlMatte} autoPlay muted loop playsInline style={{ display: 'none' }} />
+      {/* display:none stops some browsers from decoding video frames at all —
+          keep it laid out but visually and interactively invisible instead */}
+      <video
+        ref={videoRef}
+        src={owlMatte}
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{ position: 'fixed', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }}
+      />
       <canvas ref={canvasRef} className={className} />
     </>
   )
