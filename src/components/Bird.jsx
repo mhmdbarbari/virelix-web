@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { gsap, RM } from '../lib/motion'
 import { useLanguage } from '../lib/i18n'
+import owlVideo from '../assets/owl-alpha.webm'
 import owlImage from '../assets/owl-alpha.png'
+
+// Safari (desktop and iOS) doesn't reliably support alpha-channel WebM video —
+// it falls back to the video's own opaque background instead of transparency.
+// Only real fix without Apple's own encoding tools: use the transparent PNG there.
+const isSafari = typeof navigator !== 'undefined' &&
+  /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
 
 // flight waypoints: [xFrac, yFrac] along scroll progress.
 // Fractions outside 0..1 sit fully off-screen, so the owl flies out past one
@@ -81,7 +88,7 @@ export default function Bird({ active, gone }) {
       const bob = Math.sin(now * 0.0009) * 16
       const cx = (mx - tx) * 0.02, cy = (my - ty) * 0.015
       // low lerp factor = slow, gliding pursuit of the waypoint
-      bx += ((tx + cx) - bx) * 0.018; by += ((ty + bob + cy) - by) * 0.018
+      bx += ((tx + cx) - bx) * 0.010; by += ((ty + bob + cy) - by) * 0.010
       const vx = bx - px; px = bx
       const dir = vx < -0.15 ? -1 : 1, tilt = Math.max(-10, Math.min(10, vx * 1.5))
       const pk = punch.current
@@ -102,7 +109,9 @@ export default function Bird({ active, gone }) {
 
   return (
     <div id="bird" ref={ref}>
-      <img className="owl-img" src={owlImage} alt="" />
+      {isSafari
+        ? <img className="owl-img owl-img-breathe" src={owlImage} alt="" />
+        : <video className="owl-img" src={owlVideo} autoPlay muted loop playsInline />}
     </div>
   )
 }
