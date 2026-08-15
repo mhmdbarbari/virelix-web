@@ -12,7 +12,7 @@ export default function Portfolio() {
       <div className="works">
         {items.map(w => (
           <Link key={w.title} className="work hoverable reveal" to="/work">
-            <div className={`art ${w.art}`} />
+            <div className={`art ${w.img ? 'art-photo' : w.art}`} style={w.img ? { backgroundImage: `url(${w.img})` } : undefined} />
             <div className="info">
               <div className="tag">{w.tag}</div>
               <h3>{w.title}</h3><p>{w.text}</p>

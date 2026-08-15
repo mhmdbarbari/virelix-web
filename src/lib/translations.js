@@ -2,6 +2,9 @@
 // Arabic is a full, natural translation in Modern Standard Arabic (not literal
 // word-for-word, and not colloquial) — see i18n.jsx for lookup logic.
 
+import workSalon from '../assets/work-salon.jpg'
+import workJewelry from '../assets/work-jewelry.jpg'
+
 const postsEn = [
   {
     slug: 'why-your-business-needs-more-than-a-website',
@@ -179,9 +182,8 @@ export const translations = {
       title: 'A few projects ', titleEm: 'worth showing.',
       viewAll: 'View All Projects',
       items: [
-        { art: 'a1', tag: 'E-Commerce Platform', title: 'Aurora Market', text: 'Rebuilt their storefront from the ground up — conversion was up 42% within the first quarter.', stack: ['Next.js', 'PostgreSQL', 'Stripe', 'GSAP'] },
-        { art: 'a2', tag: 'AI Product', title: 'Sentinel AI', text: 'An internal tool that now handles over 3,000 support decisions a day without a human touching most of them.', stack: ['Python', 'React', 'LLM APIs', 'AWS'] },
-        { art: 'a3', tag: 'Brand & Mobile', title: 'Nova Fitness', text: 'New brand identity plus a Flutter app that crossed 100K downloads in its first six months.', stack: ['Flutter', 'Firebase', 'Brand System'] },
+        { img: workSalon, tag: 'SaaS Dashboard', title: 'Salon Loyalty Platform', text: 'A subscription platform for salons — client management, QR loyalty cards and automated reminders that bring customers back.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
+        { img: workJewelry, tag: 'E-Commerce', title: 'Attas Jewelry', text: 'A luxury jewelry storefront with live gold pricing and a premium, editorial feel that matches the brand.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
       ],
     },
     stats: {
@@ -232,10 +234,8 @@ export const translations = {
       projects: [
         { cat: 'Web', art: 'a1', tag: 'Corporate Website', title: 'Virelix Platform', text: "Our own site, built the same way we build everyone else's — the one you're on right now.", stack: ['React', 'GSAP', 'Vite'] },
         { cat: 'Branding', art: 'a3', tag: 'Visual Identity', title: 'Night Owl Identity', text: 'Logo, palette, typography and motion language for our own brand — the owl started here.', stack: ['Identity', 'Motion', 'AI Art'] },
-        { cat: 'Campaigns', art: 'a2', tag: 'AI Ad Campaign', title: 'Launch Campaign', text: 'AI-generated video ads with paid media management handled end to end across social.', stack: ['AI Video', 'Meta Ads', 'TikTok Ads'] },
-        { cat: 'Web', art: 'a2', tag: '3D & Animated', title: 'Immersive Web Experience', text: 'A scroll-driven 3D showcase site with cinematic transitions and interactive scenes.', stack: ['Three.js', 'GSAP', 'WebGL'] },
-        { cat: 'Mobile', art: 'a1', tag: 'Mobile App', title: 'Business Companion App', text: 'Cross-platform app with booking, notifications and a custom admin dashboard.', stack: ['Flutter', 'Firebase'] },
-        { cat: 'Social', art: 'a3', tag: 'Social Media', title: 'Full Account Management', text: 'Content, photography and daily management that grew reach month over month.', stack: ['Content', 'Photography', 'SEO'] },
+        { cat: 'Web', img: workSalon, tag: 'SaaS Dashboard', title: 'Salon Loyalty Platform', text: 'A subscription platform for salons — client management, QR loyalty cards and automated reminders that bring customers back.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
+        { cat: 'Web', img: workJewelry, tag: 'E-Commerce', title: 'Attas Jewelry', text: 'A luxury jewelry storefront with live gold pricing and a premium, editorial feel that matches the brand.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
       ],
     },
     blog: {
@@ -309,9 +309,8 @@ export const translations = {
       title: 'مشاريع ', titleEm: 'تستحق العرض.',
       viewAll: 'عرض جميع المشاريع',
       items: [
-        { art: 'a1', tag: 'منصة تجارة إلكترونية', title: 'Aurora Market', text: 'أعدنا بناء متجرهم الإلكتروني من الصفر — وارتفعت نسبة التحويل 42% خلال الربع الأول.', stack: ['Next.js', 'PostgreSQL', 'Stripe', 'GSAP'] },
-        { art: 'a2', tag: 'منتج ذكاء اصطناعي', title: 'Sentinel AI', text: 'أداة داخلية تعالج الآن أكثر من 3000 قرار دعم فني يوميًا دون تدخل بشري في معظمها.', stack: ['Python', 'React', 'LLM APIs', 'AWS'] },
-        { art: 'a3', tag: 'هوية وتطبيق جوال', title: 'Nova Fitness', text: 'هوية تجارية جديدة مع تطبيق مبني بتقنية Flutter تجاوز 100 ألف تحميل خلال ستة أشهر.', stack: ['Flutter', 'Firebase', 'Brand System'] },
+        { img: workSalon, tag: 'لوحة تحكم SaaS', title: 'منصة ولاء الصالونات', text: 'منصة اشتراك للصالونات النسائية — إدارة العملاء، بطاقات ولاء عبر QR، وتذكيرات تلقائية تُعيد العميلات للصالون.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
+        { img: workJewelry, tag: 'متجر إلكتروني', title: 'مجوهرات العطاس', text: 'موقع فاخر لمحل مجوهرات، بعرض أسعار الذهب اللحظية، وتصميم يعكس فخامة العلامة التجارية.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
       ],
     },
     stats: {
@@ -362,10 +361,8 @@ export const translations = {
       projects: [
         { cat: 'Web', art: 'a1', tag: 'موقع تعريفي', title: 'منصة Virelix', text: 'موقعنا الخاص، بنيناه بالطريقة نفسها التي نبني بها لبقية عملائنا — وهو تحديدًا الموقع الذي تتصفّحه الآن.', stack: ['React', 'GSAP', 'Vite'] },
         { cat: 'Branding', art: 'a3', tag: 'هوية بصرية', title: 'هوية البومة الليلية', text: 'شعار وألوان وخطوط ولغة حركة لعلامتنا التجارية نحن — من هنا بدأت قصة البومة.', stack: ['Identity', 'Motion', 'AI Art'] },
-        { cat: 'Campaigns', art: 'a2', tag: 'حملة إعلانية بالذكاء الاصطناعي', title: 'حملة الإطلاق', text: 'إعلانات فيديو مولّدة بالذكاء الاصطناعي مع إدارة كاملة للإعلانات الممولة عبر منصات التواصل.', stack: ['AI Video', 'Meta Ads', 'TikTok Ads'] },
-        { cat: 'Web', art: 'a2', tag: 'ثلاثي الأبعاد ومتحرك', title: 'تجربة ويب غامرة', text: 'موقع عرض ثلاثي الأبعاد يتفاعل مع التمرير، بانتقالات سينمائية ومشاهد تفاعلية.', stack: ['Three.js', 'GSAP', 'WebGL'] },
-        { cat: 'Mobile', art: 'a1', tag: 'تطبيق جوال', title: 'تطبيق مرافق الأعمال', text: 'تطبيق جوّال متعدد المنصّات يشمل الحجز والإشعارات ولوحة تحكم مخصّصة.', stack: ['Flutter', 'Firebase'] },
-        { cat: 'Social', art: 'a3', tag: 'التواصل الاجتماعي', title: 'إدارة كاملة للحسابات', text: 'محتوى وتصوير وإدارة يومية زادت نسبة الوصول شهرًا بعد شهر.', stack: ['Content', 'Photography', 'SEO'] },
+        { cat: 'Web', img: workSalon, tag: 'لوحة تحكم SaaS', title: 'منصة ولاء الصالونات', text: 'منصة اشتراك للصالونات النسائية — إدارة العملاء، بطاقات ولاء عبر QR، وتذكيرات تلقائية تُعيد العميلات للصالون.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
+        { cat: 'Web', img: workJewelry, tag: 'متجر إلكتروني', title: 'مجوهرات العطاس', text: 'موقع فاخر لمحل مجوهرات، بعرض أسعار الذهب اللحظية، وتصميم يعكس فخامة العلامة التجارية.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
       ],
     },
     blog: {
