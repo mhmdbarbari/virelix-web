@@ -135,7 +135,7 @@ export const translations = {
       scrollCue: 'Scroll',
     },
     about: {
-      eyebrow: '01 — Who We Are',
+      eyebrow: 'Who We Are',
       title: 'We notice the details others skip. ', titleEm: "Then we build around them.",
       lead1: "VIRELIX is a software and marketing studio based in Amman. On one side we build — websites, apps and 3D web experiences. On the other we grow accounts — content, branding, AI-assisted campaigns, social and SEO.",
       lead2: "Six of us, working as one team instead of handing you off between departments. The owl in our mark is the whole idea: watch closely, understand what you're looking at, then act on it.",
@@ -148,7 +148,7 @@ export const translations = {
       ],
     },
     services: {
-      eyebrow: '02 — What We Do',
+      eyebrow: 'What We Do',
       title: 'Code on one side. ', titleEm: 'Marketing on the other.',
       items: [
         { icon: '</>', title: 'Web & App Development', text: 'Websites and mobile apps built to actually convert visitors, not just look good in a screenshot.' },
@@ -162,7 +162,7 @@ export const translations = {
       ],
     },
     process: {
-      eyebrow: '03 — How We Work',
+      eyebrow: 'How We Work',
       title: 'A process built for ', titleEm: 'momentum.', phaseLabel: 'PHASE',
       steps: [
         { title: 'Discover', text: 'We ask about your business, your users and your competitors before any design work starts.' },
@@ -173,9 +173,9 @@ export const translations = {
         { title: 'Grow', text: 'We keep iterating and running campaigns after launch — the site isn’t "done", it’s maintained.' },
       ],
     },
-    tech: { eyebrow: '04 — Our Stack', title: 'Technologies we ', titleEm: 'actually use.' },
+    tech: { eyebrow: 'Our Stack', title: 'Technologies we ', titleEm: 'actually use.' },
     portfolio: {
-      eyebrow: '05 — Selected Work',
+      eyebrow: 'Selected Work',
       title: 'A few projects ', titleEm: 'worth showing.',
       viewAll: 'View All Projects',
       items: [
@@ -185,7 +185,7 @@ export const translations = {
       ],
     },
     stats: {
-      eyebrow: '06 — Impact', title: 'A few numbers ', titleEm: 'worth mentioning.',
+      eyebrow: 'Impact', title: 'A few numbers ', titleEm: 'worth mentioning.',
       items: [
         { count: 6, suffix: '', label: 'Specialists On The Team' },
         { count: 8, suffix: '', label: 'Services Under One Roof' },
@@ -194,7 +194,7 @@ export const translations = {
       ],
     },
     testimonials: {
-      eyebrow: '07 — Client Voices', title: 'A few words from ', titleEm: 'people we’ve worked with.',
+      eyebrow: 'Client Voices', title: 'A few words from ', titleEm: 'people we’ve worked with.',
       quotes: [
         { text: '"They didn’t just build the site — the way people talk about us actually changed after launch. Qualified leads roughly tripled."', av: 'SK', name: 'Sara K.', role: 'CEO — AURORA MARKET' },
         { text: '"What they shipped cut out about 60% of our manual work. Careful engineering, and it actually looks good too."', av: 'OM', name: 'Omar M.', role: 'COO — SENTINEL LOGISTICS' },
@@ -202,7 +202,7 @@ export const translations = {
       ],
     },
     contact: {
-      eyebrow: "08 — Let's Talk", title: 'Got a project ', titleEm: 'in mind?',
+      eyebrow: "Let's Talk", title: 'Got a project ', titleEm: 'in mind?',
       form: {
         name: 'Your name', email: 'Email address', company: 'Company (optional)', message: 'Tell us about your project',
         required: 'REQUIRED', invalidEmail: 'INVALID EMAIL',
@@ -265,7 +265,7 @@ export const translations = {
       scrollCue: 'مرر للأسفل',
     },
     about: {
-      eyebrow: '٠١ — من نحن',
+      eyebrow: 'من نحن',
       title: 'نلاحظ التفاصيل التي يتجاهلها غيرنا. ', titleEm: 'ثم نبني عليها.',
       lead1: 'VIRELIX استوديو برمجة وتسويق مقرّه مدينة عمّان. من جهة، نبني: مواقع إلكترونية وتطبيقات وتجارب ويب ثلاثية الأبعاد. ومن جهة أخرى، ننمّي الحسابات: من خلال المحتوى، والهوية البصرية، والحملات المدعومة بالذكاء الاصطناعي، ووسائل التواصل الاجتماعي، وتحسين محركات البحث.',
       lead2: 'ستة أشخاص يعملون كفريق واحد متكامل، بدلًا من تنقّلك بين أقسام متعددة. والبومة في شعارنا تختصر الفكرة تمامًا: تراقب بعناية، وتفهم ما تراه، ثم تتصرف بناءً عليه.',
@@ -278,7 +278,7 @@ export const translations = {
       ],
     },
     services: {
-      eyebrow: '٠٢ — ماذا نقدّم',
+      eyebrow: 'ماذا نقدّم',
       title: 'برمجة من جهة. ', titleEm: 'وتسويق من جهة أخرى.',
       items: [
         { icon: '</>', title: 'تطوير المواقع والتطبيقات', text: 'مواقع وتطبيقات جوّالة مصمَّمة فعلًا لتحويل الزوار إلى عملاء، لا لتبدو جميلة في لقطة شاشة فقط.' },
@@ -292,7 +292,7 @@ export const translations = {
       ],
     },
     process: {
-      eyebrow: '٠٣ — كيف نعمل',
+      eyebrow: 'كيف نعمل',
       title: 'خطة عمل مبنية ', titleEm: 'للزخم والاستمرارية.', phaseLabel: 'المرحلة',
       steps: [
         { title: 'اكتشاف', text: 'نستفسر عن مشروعك وجمهورك ومنافسيك قبل أن نبدأ أي عمل تصميمي.' },
@@ -303,9 +303,9 @@ export const translations = {
         { title: 'نمو', text: 'نواصل التطوير وتشغيل الحملات بعد الإطلاق — فالموقع ليس "منتهيًا"، بل مشروع نحافظ عليه باستمرار.' },
       ],
     },
-    tech: { eyebrow: '٠٤ — أدواتنا التقنية', title: 'تقنيات ', titleEm: 'نستخدمها فعلًا.' },
+    tech: { eyebrow: 'أدواتنا التقنية', title: 'تقنيات ', titleEm: 'نستخدمها فعلًا.' },
     portfolio: {
-      eyebrow: '٠٥ — أعمال مختارة',
+      eyebrow: 'أعمال مختارة',
       title: 'مشاريع ', titleEm: 'تستحق العرض.',
       viewAll: 'عرض جميع المشاريع',
       items: [
@@ -315,7 +315,7 @@ export const translations = {
       ],
     },
     stats: {
-      eyebrow: '٠٦ — أثرنا', title: 'أرقام ', titleEm: 'تستحق الذكر.',
+      eyebrow: 'أثرنا', title: 'أرقام ', titleEm: 'تستحق الذكر.',
       items: [
         { count: 6, suffix: '', label: 'متخصصون في الفريق' },
         { count: 8, suffix: '', label: 'خدمات تحت سقف واحد' },
@@ -324,7 +324,7 @@ export const translations = {
       ],
     },
     testimonials: {
-      eyebrow: '٠٧ — آراء عملائنا', title: 'كلمات ', titleEm: 'ممن تعاملنا معهم.',
+      eyebrow: 'آراء عملائنا', title: 'كلمات ', titleEm: 'ممن تعاملنا معهم.',
       quotes: [
         { text: '"لم يكتفوا ببناء الموقع فحسب — بل تغيّرت فعلًا الطريقة التي يتحدّث بها الناس عنّا بعد الإطلاق. تضاعف عدد العملاء المؤهَّلين قرابة ثلاث مرات."', av: 'SK', name: 'سارة ك.', role: 'المدير التنفيذي — AURORA MARKET' },
         { text: '"ما سلَّموه لنا أزال نحو 60% من عملنا اليدوي. هندسة دقيقة، ومظهر جميل فعلًا."', av: 'OM', name: 'عمر م.', role: 'مدير العمليات — SENTINEL LOGISTICS' },
@@ -332,7 +332,7 @@ export const translations = {
       ],
     },
     contact: {
-      eyebrow: '٠٨ — لنتحدث', title: 'لديك مشروع ', titleEm: 'تفكّر فيه؟',
+      eyebrow: 'لنتحدث', title: 'لديك مشروع ', titleEm: 'تفكّر فيه؟',
       form: {
         name: 'اسمك', email: 'البريد الإلكتروني', company: 'اسم الشركة (اختياري)', message: 'أخبرنا عن مشروعك',
         required: 'مطلوب', invalidEmail: 'بريد إلكتروني غير صحيح',
