@@ -34,7 +34,6 @@ export default function Footer({ onFinal }) {
   return (
     <footer className="site" id="siteFooter">
       <canvas id="stars" ref={starsRef} />
-      <div className="eyebrow reveal" style={{ justifyContent: 'center' }}>{t('footer.eyebrow')}</div>
       <h2 id="finalTitle" className="reveal">{t('footer.title')}<em>{t('footer.titleEm')}</em></h2>
       <button id="finalBtn" className="btn btn-primary hoverable magnetic reveal" onClick={onFinal}>
         {t('footer.cta')} <span className="arr">→</span>

@@ -220,7 +220,7 @@ export const translations = {
       map: { hq: 'VIRELIX HQ', address: 'Al Hussein Business Park · Building 7 · 3rd Floor · Office 301', open: 'Open in Google Maps' },
     },
     footer: {
-      eyebrow: "Let's Talk", title: 'Have a project ', titleEm: 'worth building?',
+      title: 'Have a project ', titleEm: 'worth building?',
       cta: 'Start Your Project',
       tagline: 'SEE. ANALYZE. DOMINATE.', location: 'AMMAN · JORDAN · +962 78 784 4005',
       locationShort: 'AMMAN · JORDAN',
@@ -350,7 +350,7 @@ export const translations = {
       map: { hq: 'المقر الرئيسي لـ VIRELIX', address: 'مجمع الحسين للأعمال · مبنى 7 · الطابق الثالث · مكتب 301', open: 'افتح على خرائط جوجل' },
     },
     footer: {
-      eyebrow: 'لنتحدث', title: 'لديك مشروع ', titleEm: 'يستحق أن نبنيه؟',
+      title: 'لديك مشروع ', titleEm: 'يستحق أن نبنيه؟',
       cta: 'ابدأ مشروعك',
       tagline: 'نرى. نحلّل. نتصدّر.', location: 'عمّان · الأردن · +962 78 784 4005',
       locationShort: 'عمّان · الأردن',
