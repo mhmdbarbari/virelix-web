@@ -26,7 +26,7 @@ export default function WorkPage() {
           <div className="works" key={filter}>
             {shown.map(w => {
               const Tag = w.url ? 'a' : 'div'
-              const linkProps = w.url ? { href: w.url, target: '_blank', rel: 'noreferrer' } : {}
+              const linkProps = w.url ? { href: w.url, target: '_blank', rel: 'noopener noreferrer' } : {}
               return (
                 <Tag key={w.title} className="work hoverable" {...linkProps}>
                   <div className={`art ${w.img ? 'art-photo' : w.art}`} style={w.img ? { backgroundImage: `url(${w.img})` } : undefined} />

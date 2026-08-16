@@ -22,7 +22,7 @@ export default function Portfolio() {
             </>
           )
           return w.url ? (
-            <a key={w.title} className="work hoverable reveal" href={w.url} target="_blank" rel="noreferrer">{card}</a>
+            <a key={w.title} className="work hoverable reveal" href={w.url} target="_blank" rel="noopener noreferrer">{card}</a>
           ) : (
             <Link key={w.title} className="work hoverable reveal" to="/work">{card}</Link>
           )
