@@ -24,16 +24,20 @@ export default function WorkPage() {
             ))}
           </div>
           <div className="works" key={filter}>
-            {shown.map(w => (
-              <div key={w.title} className="work hoverable">
-                <div className={`art ${w.img ? 'art-photo' : w.art}`} style={w.img ? { backgroundImage: `url(${w.img})` } : undefined} />
-                <div className="info">
-                  <div className="tag">{w.tag}</div>
-                  <h3>{w.title}</h3><p>{w.text}</p>
-                  <div className="stack" dir="ltr">{w.stack.map(s => <span key={s}>{s}</span>)}</div>
-                </div>
-              </div>
-            ))}
+            {shown.map(w => {
+              const Tag = w.url ? 'a' : 'div'
+              const linkProps = w.url ? { href: w.url, target: '_blank', rel: 'noreferrer' } : {}
+              return (
+                <Tag key={w.title} className="work hoverable" {...linkProps}>
+                  <div className={`art ${w.img ? 'art-photo' : w.art}`} style={w.img ? { backgroundImage: `url(${w.img})` } : undefined} />
+                  <div className="info">
+                    <div className="tag">{w.tag}</div>
+                    <h3>{w.title}</h3><p>{w.text}</p>
+                    <div className="stack" dir="ltr">{w.stack.map(s => <span key={s}>{s}</span>)}</div>
+                  </div>
+                </Tag>
+              )
+            })}
           </div>
         </section>
       </main>

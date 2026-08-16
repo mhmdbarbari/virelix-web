@@ -183,9 +183,9 @@ export const translations = {
       title: 'A few projects ', titleEm: 'worth showing.',
       viewAll: 'View All Projects',
       items: [
-        { img: workSalon, tag: 'SaaS Dashboard', title: 'Salon Loyalty Platform', text: 'A subscription platform for salons — client management, QR loyalty cards and automated reminders that bring customers back.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
-        { img: workJewelry, tag: 'E-Commerce', title: 'Attas Jewelry', text: 'A luxury jewelry storefront with live gold pricing and a premium, editorial feel that matches the brand.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
-        { img: workModel, tag: 'E-Commerce', title: 'Model', text: 'A men’s fashion store with a 3D-styled hero, multi-angle product photography and a bilingual shopping experience.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
+        { img: workSalon, url: 'https://salon-vilrelix-final-main.vercel.app', tag: 'SaaS Dashboard', title: 'Salon Loyalty Platform', text: 'A subscription platform for salons — client management, QR loyalty cards and automated reminders that bring customers back.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
+        { img: workJewelry, url: 'https://attasjewelry.com', tag: 'E-Commerce', title: 'Attas Jewelry', text: 'A luxury jewelry storefront with live gold pricing and a premium, editorial feel that matches the brand.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
+        { img: workModel, url: 'https://frontend-ten-ivory-p31spr0b1x.vercel.app', tag: 'E-Commerce', title: 'Model', text: 'A men’s fashion store with a 3D-styled hero, multi-angle product photography and a bilingual shopping experience.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
       ],
     },
     stats: {
@@ -236,9 +236,9 @@ export const translations = {
       projects: [
         { cat: 'Web', art: 'a1', tag: 'Corporate Website', title: 'Virelix Platform', text: "Our own site, built the same way we build everyone else's — the one you're on right now.", stack: ['React', 'GSAP', 'Vite'] },
         { cat: 'Branding', art: 'a3', tag: 'Visual Identity', title: 'Night Owl Identity', text: 'Logo, palette, typography and motion language for our own brand — the owl started here.', stack: ['Identity', 'Motion', 'AI Art'] },
-        { cat: 'Web', img: workSalon, tag: 'SaaS Dashboard', title: 'Salon Loyalty Platform', text: 'A subscription platform for salons — client management, QR loyalty cards and automated reminders that bring customers back.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
-        { cat: 'Web', img: workJewelry, tag: 'E-Commerce', title: 'Attas Jewelry', text: 'A luxury jewelry storefront with live gold pricing and a premium, editorial feel that matches the brand.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
-        { cat: 'Web', img: workModel, tag: 'E-Commerce', title: 'Model', text: 'A men’s fashion store with a 3D-styled hero, multi-angle product photography and a bilingual shopping experience.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
+        { cat: 'Web', img: workSalon, url: 'https://salon-vilrelix-final-main.vercel.app', tag: 'SaaS Dashboard', title: 'Salon Loyalty Platform', text: 'A subscription platform for salons — client management, QR loyalty cards and automated reminders that bring customers back.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
+        { cat: 'Web', img: workJewelry, url: 'https://attasjewelry.com', tag: 'E-Commerce', title: 'Attas Jewelry', text: 'A luxury jewelry storefront with live gold pricing and a premium, editorial feel that matches the brand.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
+        { cat: 'Web', img: workModel, url: 'https://frontend-ten-ivory-p31spr0b1x.vercel.app', tag: 'E-Commerce', title: 'Model', text: 'A men’s fashion store with a 3D-styled hero, multi-angle product photography and a bilingual shopping experience.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
       ],
     },
     blog: {
@@ -312,9 +312,9 @@ export const translations = {
       title: 'مشاريع ', titleEm: 'تستحق العرض.',
       viewAll: 'عرض جميع المشاريع',
       items: [
-        { img: workSalon, tag: 'لوحة تحكم SaaS', title: 'منصة ولاء الصالونات', text: 'منصة اشتراك للصالونات النسائية — إدارة العملاء، بطاقات ولاء عبر QR، وتذكيرات تلقائية تُعيد العميلات للصالون.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
-        { img: workJewelry, tag: 'متجر إلكتروني', title: 'مجوهرات العطاس', text: 'موقع فاخر لمحل مجوهرات، بعرض أسعار الذهب اللحظية، وتصميم يعكس فخامة العلامة التجارية.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
-        { img: workModel, tag: 'متجر إلكتروني', title: 'Model', text: 'متجر إلكتروني لأزياء رجالية، بواجهة رئيسية ثلاثية الأبعاد، وصور منتجات متعددة الزوايا، وتجربة تسوق ثنائية اللغة.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
+        { img: workSalon, url: 'https://salon-vilrelix-final-main.vercel.app', tag: 'لوحة تحكم SaaS', title: 'منصة ولاء الصالونات', text: 'منصة اشتراك للصالونات النسائية — إدارة العملاء، بطاقات ولاء عبر QR، وتذكيرات تلقائية تُعيد العميلات للصالون.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
+        { img: workJewelry, url: 'https://attasjewelry.com', tag: 'متجر إلكتروني', title: 'مجوهرات العطاس', text: 'موقع فاخر لمحل مجوهرات، بعرض أسعار الذهب اللحظية، وتصميم يعكس فخامة العلامة التجارية.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
+        { img: workModel, url: 'https://frontend-ten-ivory-p31spr0b1x.vercel.app', tag: 'متجر إلكتروني', title: 'Model', text: 'متجر إلكتروني لأزياء رجالية، بواجهة رئيسية ثلاثية الأبعاد، وصور منتجات متعددة الزوايا، وتجربة تسوق ثنائية اللغة.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
       ],
     },
     stats: {
@@ -365,9 +365,9 @@ export const translations = {
       projects: [
         { cat: 'Web', art: 'a1', tag: 'موقع تعريفي', title: 'منصة Virelix', text: 'موقعنا الخاص، بنيناه بالطريقة نفسها التي نبني بها لبقية عملائنا — وهو تحديدًا الموقع الذي تتصفّحه الآن.', stack: ['React', 'GSAP', 'Vite'] },
         { cat: 'Branding', art: 'a3', tag: 'هوية بصرية', title: 'هوية البومة الليلية', text: 'شعار وألوان وخطوط ولغة حركة لعلامتنا التجارية نحن — من هنا بدأت قصة البومة.', stack: ['Identity', 'Motion', 'AI Art'] },
-        { cat: 'Web', img: workSalon, tag: 'لوحة تحكم SaaS', title: 'منصة ولاء الصالونات', text: 'منصة اشتراك للصالونات النسائية — إدارة العملاء، بطاقات ولاء عبر QR، وتذكيرات تلقائية تُعيد العميلات للصالون.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
-        { cat: 'Web', img: workJewelry, tag: 'متجر إلكتروني', title: 'مجوهرات العطاس', text: 'موقع فاخر لمحل مجوهرات، بعرض أسعار الذهب اللحظية، وتصميم يعكس فخامة العلامة التجارية.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
-        { cat: 'Web', img: workModel, tag: 'متجر إلكتروني', title: 'Model', text: 'متجر إلكتروني لأزياء رجالية، بواجهة رئيسية ثلاثية الأبعاد، وصور منتجات متعددة الزوايا، وتجربة تسوق ثنائية اللغة.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
+        { cat: 'Web', img: workSalon, url: 'https://salon-vilrelix-final-main.vercel.app', tag: 'لوحة تحكم SaaS', title: 'منصة ولاء الصالونات', text: 'منصة اشتراك للصالونات النسائية — إدارة العملاء، بطاقات ولاء عبر QR، وتذكيرات تلقائية تُعيد العميلات للصالون.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
+        { cat: 'Web', img: workJewelry, url: 'https://attasjewelry.com', tag: 'متجر إلكتروني', title: 'مجوهرات العطاس', text: 'موقع فاخر لمحل مجوهرات، بعرض أسعار الذهب اللحظية، وتصميم يعكس فخامة العلامة التجارية.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
+        { cat: 'Web', img: workModel, url: 'https://frontend-ten-ivory-p31spr0b1x.vercel.app', tag: 'متجر إلكتروني', title: 'Model', text: 'متجر إلكتروني لأزياء رجالية، بواجهة رئيسية ثلاثية الأبعاد، وصور منتجات متعددة الزوايا، وتجربة تسوق ثنائية اللغة.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
       ],
     },
     blog: {
