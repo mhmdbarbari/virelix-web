@@ -26,7 +26,13 @@ export default function WorkPage() {
           <div className="works" key={filter}>
             {shown.map(w => {
               const Tag = w.url ? 'a' : 'div'
-              const linkProps = w.url ? { href: w.url, target: '_blank', rel: 'noopener noreferrer' } : {}
+              // plain <a target="_blank"> is enough almost everywhere, but on some
+              // browsers/extensions a rapid open-close-open cycle on the previous tab
+              // gets misread as a popup flood and silently swallowed with no error —
+              // opening explicitly through window.open on click sidesteps that
+              const linkProps = w.url
+                ? { href: w.url, onClick: e => { e.preventDefault(); window.open(w.url, '_blank', 'noopener,noreferrer') } }
+                : {}
               return (
                 <Tag key={w.title} className="work hoverable" {...linkProps}>
                   <div className={`art ${w.img ? 'art-photo' : w.art}`} style={w.img ? { backgroundImage: `url(${w.img})` } : undefined} />
