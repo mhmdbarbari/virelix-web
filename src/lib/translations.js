@@ -4,6 +4,7 @@
 
 import workSalon from '../assets/work-salon.jpg'
 import workJewelry from '../assets/work-jewelry.jpg'
+import workModel from '../assets/work-model.jpg'
 
 const postsEn = [
   {
@@ -184,6 +185,7 @@ export const translations = {
       items: [
         { img: workSalon, tag: 'SaaS Dashboard', title: 'Salon Loyalty Platform', text: 'A subscription platform for salons — client management, QR loyalty cards and automated reminders that bring customers back.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
         { img: workJewelry, tag: 'E-Commerce', title: 'Attas Jewelry', text: 'A luxury jewelry storefront with live gold pricing and a premium, editorial feel that matches the brand.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
+        { img: workModel, tag: 'E-Commerce', title: 'Model', text: 'A men’s fashion store with a 3D-styled hero, multi-angle product photography and a bilingual shopping experience.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
       ],
     },
     stats: {
@@ -236,6 +238,7 @@ export const translations = {
         { cat: 'Branding', art: 'a3', tag: 'Visual Identity', title: 'Night Owl Identity', text: 'Logo, palette, typography and motion language for our own brand — the owl started here.', stack: ['Identity', 'Motion', 'AI Art'] },
         { cat: 'Web', img: workSalon, tag: 'SaaS Dashboard', title: 'Salon Loyalty Platform', text: 'A subscription platform for salons — client management, QR loyalty cards and automated reminders that bring customers back.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
         { cat: 'Web', img: workJewelry, tag: 'E-Commerce', title: 'Attas Jewelry', text: 'A luxury jewelry storefront with live gold pricing and a premium, editorial feel that matches the brand.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
+        { cat: 'Web', img: workModel, tag: 'E-Commerce', title: 'Model', text: 'A men’s fashion store with a 3D-styled hero, multi-angle product photography and a bilingual shopping experience.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
       ],
     },
     blog: {
@@ -311,6 +314,7 @@ export const translations = {
       items: [
         { img: workSalon, tag: 'لوحة تحكم SaaS', title: 'منصة ولاء الصالونات', text: 'منصة اشتراك للصالونات النسائية — إدارة العملاء، بطاقات ولاء عبر QR، وتذكيرات تلقائية تُعيد العميلات للصالون.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
         { img: workJewelry, tag: 'متجر إلكتروني', title: 'مجوهرات العطاس', text: 'موقع فاخر لمحل مجوهرات، بعرض أسعار الذهب اللحظية، وتصميم يعكس فخامة العلامة التجارية.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
+        { img: workModel, tag: 'متجر إلكتروني', title: 'Model', text: 'متجر إلكتروني لأزياء رجالية، بواجهة رئيسية ثلاثية الأبعاد، وصور منتجات متعددة الزوايا، وتجربة تسوق ثنائية اللغة.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
       ],
     },
     stats: {
@@ -363,6 +367,7 @@ export const translations = {
         { cat: 'Branding', art: 'a3', tag: 'هوية بصرية', title: 'هوية البومة الليلية', text: 'شعار وألوان وخطوط ولغة حركة لعلامتنا التجارية نحن — من هنا بدأت قصة البومة.', stack: ['Identity', 'Motion', 'AI Art'] },
         { cat: 'Web', img: workSalon, tag: 'لوحة تحكم SaaS', title: 'منصة ولاء الصالونات', text: 'منصة اشتراك للصالونات النسائية — إدارة العملاء، بطاقات ولاء عبر QR، وتذكيرات تلقائية تُعيد العميلات للصالون.', stack: ['SaaS', 'Dashboard', 'Loyalty System'] },
         { cat: 'Web', img: workJewelry, tag: 'متجر إلكتروني', title: 'مجوهرات العطاس', text: 'موقع فاخر لمحل مجوهرات، بعرض أسعار الذهب اللحظية، وتصميم يعكس فخامة العلامة التجارية.', stack: ['E-Commerce', 'Branding', 'UI/UX'] },
+        { cat: 'Web', img: workModel, tag: 'متجر إلكتروني', title: 'Model', text: 'متجر إلكتروني لأزياء رجالية، بواجهة رئيسية ثلاثية الأبعاد، وصور منتجات متعددة الزوايا، وتجربة تسوق ثنائية اللغة.', stack: ['E-Commerce', 'UI/UX', 'Bilingual'] },
       ],
     },
     blog: {
