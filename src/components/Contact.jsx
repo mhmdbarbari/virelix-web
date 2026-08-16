@@ -10,7 +10,7 @@ const API_URL = import.meta.env.VITE_API_URL || ''
 
 // structural metadata (icon/link) paired by index with the translated title/value
 const INFO_META = [
-  { icon: '✉', href: 'mailto:virelixinfo@gmail.com' },
+  { icon: '✉', href: 'mailto:contact@vrelix.net' },
   { icon: '◷', href: 'tel:+962787844005', ltr: true }, // phone digits must not get bidi-reordered under RTL
   { icon: '◎', href: MAPS_URL, external: true },
 ]

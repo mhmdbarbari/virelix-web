@@ -217,7 +217,7 @@ export const translations = {
         errorNetwork: 'Could not reach the server. Please try again, or reach us on WhatsApp.',
       },
       info: [
-        { icon: '✉', title: 'Email', value: 'virelixinfo@gmail.com' },
+        { icon: '✉', title: 'Email', value: 'contact@vrelix.net' },
         { icon: '◷', title: 'Phone', value: '+962 78 784 4005' },
         { icon: '◎', title: 'Location', value: 'Al Hussein Business Park — Building 7, 3rd Floor, Office 301, Amman' },
       ],
@@ -346,7 +346,7 @@ export const translations = {
         errorNetwork: 'تعذّر الوصول إلى الخادم. يرجى المحاولة مرة أخرى، أو التواصل معنا عبر واتساب.',
       },
       info: [
-        { icon: '✉', title: 'البريد الإلكتروني', value: 'virelixinfo@gmail.com' },
+        { icon: '✉', title: 'البريد الإلكتروني', value: 'contact@vrelix.net' },
         { icon: '◷', title: 'رقم الهاتف', value: '+962 78 784 4005' },
         { icon: '◎', title: 'الموقع', value: 'مجمع الحسين للأعمال — مبنى 7، الطابق الثالث، مكتب 301، عمّان' },
       ],
