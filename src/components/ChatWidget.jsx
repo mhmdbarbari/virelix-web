@@ -85,7 +85,7 @@ export default function ChatWidget() {
       finish(text || '…')
     } catch (e) {
       if (e.name === 'AbortError') return
-      setDemo(true); finish(demoAnswer(q))
+      finish(demoAnswer(q))   // busy or offline: answer this one from site content, but keep trying the AI for the next question
     } finally { setBusy(false) }
   }
 
