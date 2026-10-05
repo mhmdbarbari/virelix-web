@@ -3,17 +3,12 @@
   (npm run build / git push). Write plain facts, one per line. HTML comments like this one are ignored.
   Only write things that are true: the assistant repeats them to customers as VIRELIX's own answers.
 
-  Facts still worth adding (delete the ones that don't apply, then write the answer as a normal line below):
-  - Price ranges per service (e.g. "A company website usually starts from ... JOD")
-  - Typical timelines (website, store, app, branding, campaign setup)
+  Facts still worth adding (write the answer as a normal line below):
   - Payment terms (deposit, milestones, methods)
-  - Working hours and days (e.g. Sun-Thu 9:00-17:00)
-  - Do you work with clients outside Jordan? Which countries / languages?
-  - Hosting, domain and maintenance: included or separate? Monthly maintenance plans?
-  - Do clients get source code / ownership of everything?
-  - Minimum project size or minimum monthly budget for ads / social
-  - How many revisions are included
-  - Can people visit the office / book a meeting or call?
+  - Working days (e.g. Sunday to Thursday)
+  - Do clients get the source code / ownership of everything?
+  - Price ranges for stores, apps, branding
+  - Can people visit the office / book a meeting?
 -->
 
 ## More about VIRELIX
@@ -24,3 +19,16 @@
 - Everything we build can be bilingual (Arabic and English, including right-to-left layouts).
 - Visitors can reach us by WhatsApp, phone, email or the contact form; we reply within one working day.
 - The studio is in Amman, Jordan, and the first conversation can happen by phone or WhatsApp.
+
+## Pricing, timelines and terms
+
+- Pricing depends on the project. For websites, prices start from around 200 JOD (Jordanian dinar); the final price depends on what the site needs.
+- Marketing (social media, ads, AI campaigns, SEO) and photography/filming are priced according to the specific service requested; there is no single fixed price.
+- The minimum budget for advertising and for social media management is 150 JOD.
+- We cannot give a project timeline before we know the requirements. Once the visitor shares what they need (through the planner, the contact form or WhatsApp), we give a realistic timeline.
+- Working hours are 9:00 AM to 5:00 PM.
+- We work with clients outside Jordan as well as inside Jordan.
+- Hosting and the domain name are included for the first year only. After that they are renewed separately.
+- Website maintenance is offered as an annual subscription.
+- Revisions: up to 3 rounds of revisions are included in the agreed price. Additional revisions beyond that are priced separately.
+- For an exact quote, the visitor should use the project planner [planner] or contact us [contact] [whatsapp].

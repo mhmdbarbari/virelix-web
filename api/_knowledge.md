@@ -223,3 +223,16 @@ No roles are listed right now; people can send an open application on the career
 - Everything we build can be bilingual (Arabic and English, including right-to-left layouts).
 - Visitors can reach us by WhatsApp, phone, email or the contact form; we reply within one working day.
 - The studio is in Amman, Jordan, and the first conversation can happen by phone or WhatsApp.
+
+## Pricing, timelines and terms
+
+- Pricing depends on the project. For websites, prices start from around 200 JOD (Jordanian dinar); the final price depends on what the site needs.
+- Marketing (social media, ads, AI campaigns, SEO) and photography/filming are priced according to the specific service requested; there is no single fixed price.
+- The minimum budget for advertising and for social media management is 150 JOD.
+- We cannot give a project timeline before we know the requirements. Once the visitor shares what they need (through the planner, the contact form or WhatsApp), we give a realistic timeline.
+- Working hours are 9:00 AM to 5:00 PM.
+- We work with clients outside Jordan as well as inside Jordan.
+- Hosting and the domain name are included for the first year only. After that they are renewed separately.
+- Website maintenance is offered as an annual subscription.
+- Revisions: up to 3 rounds of revisions are included in the agreed price. Additional revisions beyond that are priced separately.
+- For an exact quote, the visitor should use the project planner [planner] or contact us [contact] [whatsapp].
