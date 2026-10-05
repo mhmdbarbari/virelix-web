@@ -214,3 +214,12 @@ No roles are listed right now; people can send an open application on the career
 
 - Project planner: four questions, then a brief with the right services and team, sent to us pre-filled [planner].
 - Or use the contact form [contact]. Pricing depends on the project; we reply with questions and a proposal.
+
+## More about VIRELIX
+
+- The website has a free website check at /check [check]: the visitor enters a site address and gets a quick report on speed, SEO, mobile friendliness, accessibility and security basics, with no sign-up.
+- The project planner [planner] asks four short questions and then sends us a pre-filled brief, so the first reply from us already knows what the visitor needs.
+- All services are done in-house by our own team; we do not outsource design, development, filming or campaigns.
+- Everything we build can be bilingual (Arabic and English, including right-to-left layouts).
+- Visitors can reach us by WhatsApp, phone, email or the contact form; we reply within one working day.
+- The studio is in Amman, Jordan, and the first conversation can happen by phone or WhatsApp.

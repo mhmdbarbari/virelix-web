@@ -11,7 +11,7 @@ import owlEyes from '../assets/img/owl-head-eyes.webp'
 // POST endpoint that streams plain-text answers (api/chat.js on Vercel). Unset = demo mode.
 const ENDPOINT = import.meta.env.VITE_CHAT_ENDPOINT
 const EASE = [0.16, 1, 0.3, 1]
-const TOKEN = /\[(contact|planner|whatsapp|careers|service:[a-z0-9-]+|work:[a-z0-9-]+)\]/g
+const TOKEN = /\[(contact|planner|whatsapp|careers|check|service:[a-z0-9-]+|work:[a-z0-9-]+)\]/g
 
 const UI = {
   en: {
@@ -19,7 +19,7 @@ const UI = {
     hi: 'Hi! I’m the VIRELIX owl. Ask me about our services, our work, or how to start a project.',
     sugg: ['What do you build?', 'Do you make 3D websites?', 'How much does a website cost?', 'Where are you based?'],
     ph: 'Ask a question…', note: 'AI answers can be wrong. Please don’t share confidential information.', person: 'Talk to a person',
-    act: { contact: 'Contact the team', planner: 'Plan your project', whatsapp: 'WhatsApp us', careers: 'See careers' },
+    act: { contact: 'Contact the team', planner: 'Plan your project', whatsapp: 'WhatsApp us', careers: 'See careers', check: 'Free website check' },
     asked: 'From the website chat, I asked:',
   },
   ar: {
@@ -27,7 +27,7 @@ const UI = {
     hi: 'أهلاً! أنا بومة VIRELIX. اسألني عن خدماتنا، أعمالنا، أو كيف تبدأ مشروعك.',
     sugg: ['شو بتعملوا؟', 'بتعملوا مواقع 3D؟', 'كم بكلّف الموقع؟', 'وين مكتبكم؟'],
     ph: 'اكتب سؤالك…', note: 'إجابات الذكاء الاصطناعي قد تخطئ. لا تشارك معلومات سرية.', person: 'تحدّث مع شخص',
-    act: { contact: 'تواصل مع الفريق', planner: 'خطّط لمشروعك', whatsapp: 'راسلنا واتساب', careers: 'الوظائف' },
+    act: { contact: 'تواصل مع الفريق', planner: 'خطّط لمشروعك', whatsapp: 'راسلنا واتساب', careers: 'الوظائف', check: 'فحص موقعك مجاناً' },
     asked: 'من محادثة الموقع، سألت:',
   },
 }
@@ -101,6 +101,7 @@ export default function ChatWidget() {
     }
     if (a === 'planner') return navigate('/start')
     if (a === 'careers') return navigate('/careers')
+    if (a === 'check') return navigate('/check')
     const [k, id] = a.split(':')
     navigate(k === 'service' ? '/services/' + id : '/work/' + id)
   }

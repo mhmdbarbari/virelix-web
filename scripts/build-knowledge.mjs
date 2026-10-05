@@ -1,6 +1,6 @@
 // Builds api/_knowledge.md: the only content the chat assistant may answer from. Runs before every build.
 import { createServer } from 'vite'
-import { writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 
 const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom', logLevel: 'error' })
 const { COPY, CONTACT, SERVICES, WORK, STACK } = await vite.ssrLoadModule('/src/content.js')
@@ -38,5 +38,10 @@ h('Careers')
 L.push('No roles are listed right now; people can send an open application on the careers page [careers].')
 h('Starting a project')
 L.push('- Project planner: four questions, then a brief with the right services and team, sent to us pre-filled [planner].', '- Or use the contact form [contact]. Pricing depends on the project; we reply with questions and a proposal.')
+// Hand-written extra facts (prices, timelines, hours...): knowledge-extra.md at the project root, HTML comments ignored.
+try {
+  const extra = readFileSync(new URL('../knowledge-extra.md', import.meta.url), 'utf8').replace(/<!--[\s\S]*?-->/g, '').trim()
+  if (extra) L.push('', extra)
+} catch { /* optional file */ }
 writeFileSync(new URL('../api/_knowledge.md', import.meta.url), L.join('\n') + '\n')
 console.log('api/_knowledge.md written')
