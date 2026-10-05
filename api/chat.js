@@ -1,11 +1,16 @@
 // Vercel serverless function: POST /api/chat → streams the assistant's answer as plain text.
-// Needs ANTHROPIC_API_KEY in the hosting environment (never in the browser).
+// Provider (keys live only in the hosting environment, never in the browser):
+//   - free:   CHAT_API_KEY  → any OpenAI-compatible API, Groq by default (free tier, no credit card)
+//   - paid:   ANTHROPIC_API_KEY → Claude
+// Optional: CHAT_BASE_URL, CHAT_MODEL.
 // The assistant answers only from api/_knowledge.md (generated from the site content at build time).
 import Anthropic from '@anthropic-ai/sdk'
 import { readFileSync } from 'node:fs'
 
 const KNOWLEDGE = readFileSync(new URL('./_knowledge.md', import.meta.url), 'utf8')
-const MODEL = process.env.CHAT_MODEL || 'claude-opus-5-5'
+const FREE_KEY = process.env.CHAT_API_KEY
+const FREE_URL = (process.env.CHAT_BASE_URL || 'https://api.groq.com/openai/v1').replace(/\/$/, '')
+const MODEL = process.env.CHAT_MODEL || (FREE_KEY && !process.env.ANTHROPIC_API_KEY ? 'llama-3.3-70b-versatile' : 'claude-opus-5-5')
 const ALLOWED_ORIGINS = (process.env.CHAT_ALLOWED_ORIGINS || '').split(',').map((s) => s.trim()).filter(Boolean)
 const MAX_TURNS = 16, MAX_CHARS = 1200
 
@@ -27,6 +32,29 @@ ${KNOWLEDGE}
 
 let client                                        // created on first use, so a missing key fails gracefully
 
+// Streams an answer from any OpenAI-compatible chat API (Groq, Gemini, OpenRouter, ...) as plain text.
+async function streamOpenAICompatible(messages, res) {
+  const r = await fetch(`${FREE_URL}/chat/completions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${FREE_KEY}` },
+    body: JSON.stringify({ model: MODEL, stream: true, temperature: 0.3, max_tokens: 700, messages: [{ role: 'system', content: SYSTEM }, ...messages] }),
+  })
+  if (!r.ok || !r.body) throw new Error(`provider ${r.status}`)
+  const decoder = new TextDecoder()
+  let buf = ''
+  for await (const chunk of r.body) {
+    buf += decoder.decode(chunk, { stream: true })
+    const lines = buf.split('\n'); buf = lines.pop()
+    for (const line of lines) {
+      if (!line.startsWith('data:')) continue
+      const data = line.slice(5).trim()
+      if (!data || data === '[DONE]') continue
+      try { const t = JSON.parse(data).choices?.[0]?.delta?.content; if (t) res.write(t) } catch { /* partial line */ }
+    }
+  }
+  res.end()
+}
+
 export default async function handler(req, res) {
   const origin = req.headers.origin
   if (ALLOWED_ORIGINS.length && origin && !ALLOWED_ORIGINS.includes(origin)) return res.status(403).json({ error: 'forbidden' })
@@ -46,6 +74,7 @@ export default async function handler(req, res) {
   res.setHeader('Content-Type', 'text/plain; charset=utf-8')
   res.setHeader('Cache-Control', 'no-store')
   try {
+    if (FREE_KEY && !process.env.ANTHROPIC_API_KEY) return await streamOpenAICompatible(messages, res)
     client ??= new Anthropic()
     const stream = client.beta.messages.stream({
       model: MODEL,
