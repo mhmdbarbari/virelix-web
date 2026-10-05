@@ -1,44 +1,25 @@
 import { useEffect } from 'react'
-import { gsap, isTouch } from '../lib/motion'
+import { isFinePointer, prefersReducedMotion } from '../motion'
 
+/**
+ * Magnetic buttons: elements with data-mag are gently pulled toward the cursor.
+ * The page keeps the normal system cursor.
+ */
 export default function Cursor() {
   useEffect(() => {
-    if (isTouch) return
-    const click = e => {
-      const r = document.createElement('div'); r.className = 'ripple'
-      r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px'
-      document.body.appendChild(r); setTimeout(() => r.remove(), 700)
+    if (!isFinePointer() || prefersReducedMotion()) return
+    const mag = (e) => {
+      const el = e.target.closest('[data-mag]')
+      document.querySelectorAll('[data-mag].magging').forEach((m) => {
+        if (m !== el) { m.classList.remove('magging'); m.style.transition = 'transform .7s cubic-bezier(.16,1,.3,1)'; m.style.transform = '' }
+      })
+      if (!el) return
+      const b = el.getBoundingClientRect()
+      el.classList.add('magging'); el.style.transition = 'transform .25s ease-out'
+      el.style.transform = `translate(${(e.clientX - b.left - b.width / 2) * 0.28}px,${(e.clientY - b.top - b.height / 2) * 0.38}px)`
     }
-    addEventListener('click', click)
-    // magnetic buttons
-    const mags = [...document.querySelectorAll('.magnetic')]
-    const magHandlers = mags.map(b => {
-      const move = e => {
-        const r = b.getBoundingClientRect()
-        gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * 0.25,
-          y: (e.clientY - r.top - r.height / 2) * 0.35, duration: 0.4, ease: 'power2.out' })
-      }
-      const leave = () => gsap.to(b, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,.4)' })
-      b.addEventListener('mousemove', move); b.addEventListener('mouseleave', leave)
-      return { b, move, leave }
-    })
-    // card spotlight follows the mouse
-    const cards = [...document.querySelectorAll('.card')]
-    const cardHandlers = cards.map(cd => {
-      const move = e => {
-        const r = cd.getBoundingClientRect()
-        cd.style.setProperty('--mx', (e.clientX - r.left) + 'px')
-        cd.style.setProperty('--my', (e.clientY - r.top) + 'px')
-      }
-      cd.addEventListener('mousemove', move)
-      return { cd, move }
-    })
-    return () => {
-      removeEventListener('click', click)
-      magHandlers.forEach(({ b, move, leave }) => { b.removeEventListener('mousemove', move); b.removeEventListener('mouseleave', leave) })
-      cardHandlers.forEach(({ cd, move }) => cd.removeEventListener('mousemove', move))
-    }
+    window.addEventListener('mousemove', mag)
+    return () => window.removeEventListener('mousemove', mag)
   }, [])
-
   return null
 }

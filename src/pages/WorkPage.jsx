@@ -1,59 +1,34 @@
 import { useState } from 'react'
-import { useLanguage } from '../lib/i18n'
-
-const FILTER_KEYS = ['All', 'Web', 'Mobile', 'Branding', 'Campaigns', 'Social']
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
+import { useI18n } from '../i18n'
+import { WORK } from '../content'
+import { useMeta } from '../hooks/useMeta'
+import { stagger } from '../anim'
+import Heading from '../components/Heading'
+import WorkCard from '../components/WorkCard'
 
 export default function WorkPage() {
-  const { t } = useLanguage()
-  const projects = t('work.projects')
-  const filterLabels = t('work.filters')
-  const [filter, setFilter] = useState('All')
-  const shown = filter === 'All' ? projects : projects.filter(p => p.cat === filter)
-
+  const { t } = useI18n()
+  useMeta(t.nav.work, t.work.pageLead)
+  const [f, setF] = useState('all')
+  const list = WORK.filter((p) => f === 'all' || p.cat.includes(f))
   return (
-    <>
-      <main>
-        <section className="page-head">
-          <div className="eyebrow reveal">{t('work.eyebrow')}</div>
-          <h2 className="title reveal">{t('work.title')}<em>{t('work.titleEm')}</em></h2>
-          <p className="lead reveal">{t('work.lead')}</p>
-          <div className="filters reveal">
-            {FILTER_KEYS.map(f => (
-              <button key={f} className={`filter hoverable${filter === f ? ' on' : ''}`}
-                onClick={() => setFilter(f)}>{filterLabels[f]}</button>
+    <section className="sec page-top" id="work-page">
+      <div className="wrap">
+        <Heading as="h1" label={t.work.label} title={t.work.pageTitle} lead={t.work.pageLead} />
+        <LayoutGroup>
+          <div className="filters" role="tablist">
+            {Object.entries(t.work.filters).map(([k, l]) => (
+              <button key={k} role="tab" aria-selected={f === k} className={f === k ? 'on' : ''} onClick={() => setF(k)}>
+                {f === k && <motion.span layoutId="flt" className="flt-pill" />}<span>{l}</span>
+              </button>
             ))}
           </div>
-          <div className="works" key={filter}>
-            {shown.map(w => {
-              const Tag = w.url ? 'a' : 'div'
-              // plain <a target="_blank"> is enough almost everywhere, but on some
-              // browsers/extensions a rapid open-close-open cycle on the previous tab
-              // gets misread as a popup flood and silently swallowed with no error —
-              // opening explicitly through window.open on click sidesteps that
-              const linkProps = w.url
-                ? { href: w.url, onClick: e => { e.preventDefault(); window.open(w.url, '_blank', 'noopener,noreferrer') } }
-                : {}
-              return (
-                <Tag key={w.title} className="work hoverable" {...linkProps}>
-                  <div className={`art ${w.img ? 'art-photo' : w.art}`} style={w.img ? { backgroundImage: `url(${w.img})` } : undefined} />
-                  <div className="info">
-                    <div className="tag">{w.tag}</div>
-                    <h3>{w.title}</h3><p>{w.text}</p>
-                    <div className="stack" dir="ltr">{w.stack.map(s => <span key={s}>{s}</span>)}</div>
-                  </div>
-                </Tag>
-              )
-            })}
-          </div>
-        </section>
-      </main>
-      <footer className="page-foot">
-        <div className="foot-meta">
-          <span>© 2026 VIRELIX</span>
-          <span>{t('footer.tagline')}</span>
-          <span>{t('footer.locationShort')}</span>
-        </div>
-      </footer>
-    </>
+          <motion.div layout className="work-grid page" initial="hidden" animate="show" variants={stagger(0.08)}>
+            <AnimatePresence mode="popLayout">{list.map((p) => <WorkCard key={p.id} p={p} />)}</AnimatePresence>
+          </motion.div>
+        </LayoutGroup>
+      </div>
+    </section>
   )
 }

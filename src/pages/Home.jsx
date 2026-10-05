@@ -1,64 +1,59 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
-import { gsap, RM } from '../lib/motion'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useI18n } from '../i18n'
+import { POSTS } from '../content'
+import { useSmoothScroll, useAnchor } from '../hooks/useLenis'
+import { useMeta } from '../hooks/useMeta'
+import { routeHref } from '../router'
+import { ScrollTrigger } from '../motion'
+import { inView, stagger, up } from '../anim'
 import Hero from '../components/Hero'
 import About from '../components/About'
 import Services from '../components/Services'
+import WorkSection from '../components/WorkSection'
 import Process from '../components/Process'
-import Tech from '../components/Tech'
-import Portfolio from '../components/Portfolio'
-import Stats from '../components/Stats'
-import Testimonials from '../components/Testimonials'
+import Stack from '../components/Stack'
+import Numbers from '../components/Numbers'
+import Heading from '../components/Heading'
+import BlogCard from '../components/BlogCard'
 import Contact from '../components/Contact'
-import Footer from '../components/Footer'
+import Showcase3D from '../components/Showcase3D'
+import CheckTeaser from '../components/CheckTeaser'
 
-export default function Home({ ready, onFinal }) {
-  const location = useLocation()
-
-  // hero entrance — plays after the intro, and again when returning to home
+export default function Home({ ready }) {
+  const { t } = useI18n()
+  const { state } = useLocation()
+  const navigate = useNavigate()
+  const { scrollTo } = useSmoothScroll()
+  const anchor = useAnchor()
+  useMeta()
   useEffect(() => {
-    if (!ready) return
-    if (RM) {
-      gsap.set('#heroEyebrow, .hero-sub, .hero-cta, .hero-meta, .scrollcue', { opacity: 1, y: 0 })
-      gsap.set('#hero h1 .row span', { y: 0 })
-      return
-    }
-    const tl = gsap.timeline()
-      .to('#heroEyebrow', { opacity: 1, duration: 0.8 }, 0)
-      .to('#hero h1 .row span', { y: 0, stagger: 0.14, duration: 1.1, ease: 'power4.out' }, 0.1)
-      .to('.hero-sub', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.7)
-      .to('.hero-cta', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.9)
-      .to('.hero-meta', { opacity: 1, duration: 1.2 }, 1.2)
-      .to('.scrollcue', { opacity: 1, duration: 1 }, 1.4)
-    return () => tl.kill()
-  }, [ready])
-
-  // a navlink on another page asked for a specific section — web fonts
-  // (Cairo for Arabic) can still be swapping in and reflowing the page at
-  // this point, so land once, then correct once more after fonts settle
-  useEffect(() => {
-    const target = location.state?.scrollTo
-    if (!target) return
-    const go = () => document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' })
-    const t1 = setTimeout(go, 450)
-    const t2 = setTimeout(go, 1300)
-    return () => { clearTimeout(t1); clearTimeout(t2) }
-  }, [location.state])
-
+    if (!state?.scrollTo) return
+    const id = setTimeout(() => { ScrollTrigger.refresh(); scrollTo(state.scrollTo); navigate('.', { replace: true, state: null }) }, 400)
+    return () => clearTimeout(id)
+  }, [state]) // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Process />
-        <Tech />
-        <Portfolio />
-        <Stats />
-        <Testimonials />
-        <Contact />
-      </main>
-      <Footer onFinal={onFinal} />
+      <Hero ready={ready} />
+      <About />
+      <Services />
+      <Showcase3D />
+      <WorkSection />
+      <Process />
+      <Stack />
+      <Numbers />
+      <CheckTeaser />
+      <section className="sec blog-sec" id="blog">
+        <div className="wrap">
+          <div className="head-row">
+            <Heading label={t.blog.label} title={t.blog.title} />
+            <motion.a {...inView} variants={up} href={routeHref('/blog')} onClick={anchor} className="btn btn-ghost">{t.blog.all} →</motion.a>
+          </div>
+          <motion.div className="post-grid" {...inView} variants={stagger(0.1)}>{POSTS.map((p) => <BlogCard key={p.id} post={p} />)}</motion.div>
+        </div>
+      </section>
+      <Contact />
     </>
   )
 }

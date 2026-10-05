@@ -1,146 +1,114 @@
-import { useState } from 'react'
-import { InstagramIcon, TikTokIcon, WhatsAppIcon } from './SocialIcons'
-import { useLanguage } from '../lib/i18n'
+import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import { useI18n } from '../i18n'
+import { CONTACT } from '../content'
+import { inView, stagger, up } from '../anim'
+import Heading from './Heading'
+import Icon from './Icon'
 
-const MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=King+Hussein+Business+Park,+Amman,+Jordan'
-
-// in dev this stays empty so Vite's /api proxy (vite.config.js) handles it;
-// in production set VITE_API_URL to the deployed backend's origin
-const API_URL = import.meta.env.VITE_API_URL || ''
-
-// structural metadata (icon/link) paired by index with the translated title/value
-const INFO_META = [
-  { icon: '✉', href: 'mailto:contact@vrelix.net' },
-  { icon: '◷', href: 'tel:+962787844005', ltr: true }, // phone digits must not get bidi-reordered under RTL
-  { icon: '◎', href: MAPS_URL, external: true },
-]
-
-const SOCIALS = [
-  { label: 'WhatsApp', href: 'https://wa.me/962787844005', Icon: WhatsAppIcon },
-  { label: 'Instagram', href: 'https://www.instagram.com/virelix.solutions', Icon: InstagramIcon },
-  { label: 'TikTok', href: 'https://www.tiktok.com/@virelix.solutions', Icon: TikTokIcon },
-]
+// Set VITE_CONTACT_ENDPOINT (Formspree, Getform, your API…) to receive messages directly.
+// Without it, the form opens the visitor's email app with the message filled in.
+const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 export default function Contact() {
-  const { t } = useLanguage()
-  const f = t('contact.form')
-  const info = t('contact.info').map((r, i) => ({ ...r, ...INFO_META[i] }))
-  const map = t('contact.map')
-
-  const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
+  const { t } = useI18n()
+  const c = t.contact
+  const [needs, setNeeds] = useState([])
   const [errors, setErrors] = useState({})
-  const [sent, setSent] = useState(false)
-  const [sending, setSending] = useState(false)
-  const [serverError, setServerError] = useState('')
+  const [status, setStatus] = useState('idle')
+  const formRef = useRef(null)
 
-  const set = k => e => {
-    setForm(fm => ({ ...fm, [k]: e.target.value }))
-    setErrors(er => ({ ...er, [k]: false }))
-  }
+  // Pre-fill from the project planner or the chat assistant: { needs: number[], message: string }.
+  useEffect(() => {
+    const on = (e) => {
+      const d = e.detail || {}
+      if (d.needs) setNeeds(d.needs.map((i) => c.needs[i]).filter(Boolean))
+      const m = formRef.current?.elements.message
+      if (m && d.message) { m.value = d.message; m.rows = Math.min(14, d.message.split('\n').length + 1) }
+    }
+    addEventListener('vx:prefill', on)
+    return () => removeEventListener('vx:prefill', on)
+  }, [c])
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault()
-    if (sending) return
-    const er = {
-      name: form.name.trim().length < 2,
-      email: !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.trim()),
-      message: form.message.trim().length < 4,
+    const f = e.target, fd = new FormData(f)
+    if (fd.get('website')) return
+    const d = { name: (fd.get('name') || '').trim(), email: (fd.get('email') || '').trim(), company: (fd.get('company') || '').trim(), message: (fd.get('message') || '').trim(), needs }
+    const errs = {}
+    if (d.name.length < 2) errs.name = c.errName
+    if (!EMAIL_RE.test(d.email)) errs.email = c.errEmail
+    setErrors(errs)
+    if (Object.keys(errs).length) { f.querySelector(`[name="${Object.keys(errs)[0]}"]`)?.focus(); return }
+    if (!ENDPOINT) {
+      const body = [`Name: ${d.name}`, `Email: ${d.email}`, d.company && `Company: ${d.company}`, needs.length && `Needs: ${needs.join(', ')}`, '', d.message].filter((x) => typeof x === 'string').join('\n')
+      window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent('New project: ' + (d.company || d.name))}&body=${encodeURIComponent(body)}`
+      setStatus('mailto'); return
     }
-    setErrors(er)
-    if (er.name || er.email || er.message) return
-    setSending(true)
-    setServerError('')
+    setStatus('sending')
     try {
-      const res = await fetch(`${API_URL}/api/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (res.ok) {
-        setSent(true)
-      } else if (res.status === 429) {
-        setServerError(f.errorRate)
-      } else {
-        setServerError(f.errorGeneric)
-      }
-    } catch {
-      setServerError(f.errorNetwork)
-    } finally {
-      setSending(false)
-    }
+      const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ ...d, page: location.href }) })
+      if (!r.ok) throw new Error(r.status)
+      setStatus('sent'); f.reset(); setNeeds([])
+    } catch { setStatus('error') }
   }
+
+  const field = (name, label, opts = {}) => (
+    <label className={'fld' + (errors[name] ? ' err' : '') + (opts.full ? ' full' : '')}>
+      {opts.area ? <textarea name={name} rows="4" placeholder=" " /> : <input name={name} type={opts.type || 'text'} placeholder=" " autoComplete={opts.ac} aria-invalid={!!errors[name]} />}
+      <span>{label}</span>
+      {errors[name] && <em>{errors[name]}</em>}
+    </label>
+  )
+  const toggle = (n) => setNeeds((a) => (a.includes(n) ? a.filter((x) => x !== n) : [...a, n]))
 
   return (
-    <section id="contact">
-      <div className="eyebrow reveal">{t('contact.eyebrow')}</div>
-      <h2 className="title reveal">{t('contact.title')}<em>{t('contact.titleEm')}</em></h2>
+    <section className="sec contact" id="contact">
       <div className="wrap">
-        {sent ? (
-          <div id="formOk" style={{ display: 'block' }}>
-            <b>{f.success}</b>
-          </div>
-        ) : (
-          <form onSubmit={submit} noValidate>
-            <div className={`field${errors.name ? ' bad' : ''}`}>
-              <input className="hoverable" id="fName" type="text" placeholder=" "
-                autoComplete="name" value={form.name} onChange={set('name')} />
-              <label htmlFor="fName">{f.name}</label><span className="err">{f.required}</span>
-            </div>
-            <div className={`field${errors.email ? ' bad' : ''}`}>
-              <input className="hoverable" id="fMail" type="email" placeholder=" "
-                autoComplete="email" value={form.email} onChange={set('email')} />
-              <label htmlFor="fMail">{f.email}</label><span className="err">{f.invalidEmail}</span>
-            </div>
-            <div className="field">
-              <input className="hoverable" id="fComp" type="text" placeholder=" "
-                autoComplete="organization" value={form.company} onChange={set('company')} />
-              <label htmlFor="fComp">{f.company}</label>
-            </div>
-            <div className={`field${errors.message ? ' bad' : ''}`}>
-              <textarea className="hoverable" id="fMsg" rows="4" placeholder=" "
-                value={form.message} onChange={set('message')} />
-              <label htmlFor="fMsg">{f.message}</label><span className="err">{f.required}</span>
-            </div>
-            {serverError && <p className="form-err">{serverError}</p>}
-            <button type="submit" className="btn btn-primary hoverable magnetic" disabled={sending}
-              style={sending ? { opacity: 0.6, pointerEvents: 'none' } : undefined}>
-              {sending ? f.sending : <>{f.send} <span className="arr">→</span></>}
-            </button>
-          </form>
-        )}
-        <div className="c-info">
-          {info.map(r => (
-            <div key={r.title} className="row">
-              <div className="ic">{r.icon}</div>
-              <div>
-                <b>{r.title}</b>
-                {r.href
-                  ? <a className="cval hoverable" href={r.href} dir={r.ltr ? 'ltr' : undefined}
-                      {...(r.external ? { target: '_blank', rel: 'noreferrer' } : {})}>{r.value}</a>
-                  : <span>{r.value}</span>}
+        <Heading label={c.label} title={c.title} lead={c.lead} />
+        <div className="ct-grid">
+          <motion.form ref={formRef} className="ct-form" onSubmit={submit} noValidate {...inView} variants={stagger(0.06)}>
+            <motion.div className="ct-needs" variants={up}>
+              <span className="mono">{c.need}</span>
+              <div>{c.needs.map((n) => <button type="button" key={n} className={needs.includes(n) ? 'on' : ''} aria-pressed={needs.includes(n)} onClick={() => toggle(n)}>{n}</button>)}</div>
+            </motion.div>
+            <motion.div className="ct-fields" variants={up}>
+              {field('name', c.name, { ac: 'name' })}
+              {field('email', c.email, { type: 'email', ac: 'email' })}
+              {field('company', c.company, { full: true, ac: 'organization' })}
+              {field('message', c.message, { full: true, area: true })}
+              <input className="hp" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+            </motion.div>
+            <motion.div variants={up} className="ct-send">
+              <button className="btn btn-grad" type="submit" disabled={status === 'sending'}>{status === 'sending' ? c.sending : c.send}<Icon name="arrow" className="flip" /></button>
+              <div role="status" aria-live="polite">
+                {status === 'sent' && <p className="ok">{c.ok}</p>}
+                {status === 'mailto' && <p className="ok">{c.okMail}</p>}
+                {status === 'error' && <p className="fail">{c.fail}</p>}
               </div>
-            </div>
-          ))}
-          <div className="socials">
-            {SOCIALS.map(({ label, href, Icon }) => (
-              <a key={label} className="hoverable" href={href} target="_blank" rel="noreferrer"
-                aria-label={label} title={label}>
-                <Icon />
-              </a>
-            ))}
-          </div>
+            </motion.div>
+          </motion.form>
+
+          <motion.aside className="ct-info card" {...inView} variants={stagger(0.08)}>
+            <motion.a variants={up} href={`mailto:${CONTACT.email}`} className="ct-row"><span className="ct-ic"><Icon name="mail" /></span><span><small>{c.emailL}</small><b dir="ltr">{CONTACT.email}</b></span></motion.a>
+            <motion.a variants={up} href={CONTACT.phoneHref} className="ct-row"><span className="ct-ic"><Icon name="phone" /></span><span><small>{c.phoneL}</small><b dir="ltr">{CONTACT.phone}</b></span></motion.a>
+            <motion.a variants={up} href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer" className="ct-row"><span className="ct-ic"><Icon name="pin" /></span><span><small>{c.locL}</small><b>{c.address}</b></span></motion.a>
+            <motion.div variants={up} className="ct-social">
+              <a className="btn btn-wa" href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" />{c.whatsapp}</a>
+              {CONTACT.instagram && <a className="soc" href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Icon name="instagram" /></a>}
+              {CONTACT.tiktok && <a className="soc" href={CONTACT.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"><Icon name="tiktok" /></a>}
+            </motion.div>
+          </motion.aside>
         </div>
-      </div>
-      <div className="map-wrap reveal">
-        <iframe
-          title="VIRELIX — Al Hussein Business Park, Amman"
-          src="https://www.google.com/maps?q=Al+Hussein+Business+Park,+Amman,+Jordan&z=16&output=embed"
-          loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
-        <a className="map-label hoverable" href={MAPS_URL} target="_blank" rel="noreferrer">
-          <b>{map.hq}</b>
-          <span>{map.address}</span>
-          <em>{map.open} ↗</em>
-        </a>
+
+        <motion.div className="map" {...inView} variants={up}>
+          <iframe title="VIRELIX HQ map" src={CONTACT.mapsEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+          <div className="map-card">
+            <b>{c.hq}</b><span>{c.address}</span>
+            <a className="mono" href={CONTACT.mapsUrl} target="_blank" rel="noopener noreferrer">{c.openMaps} ↗</a>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

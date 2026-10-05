@@ -1,14 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import { LanguageProvider } from './lib/i18n'
-import App from './App'
-import './index.css'
+import { BrowserRouter, HashRouter } from 'react-router-dom'
+import App from './App.jsx'
+import { HASH_ROUTER } from './router'
+import './styles.css'
 
+const Router = HASH_ROUTER ? HashRouter : BrowserRouter
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>
-  </BrowserRouter>
+  <React.StrictMode><Router><App /></Router></React.StrictMode>
 )
