@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs'
 const KNOWLEDGE = readFileSync(new URL('./_knowledge.md', import.meta.url), 'utf8')
 const FREE_KEY = process.env.CHAT_API_KEY
 const FREE_URL = (process.env.CHAT_BASE_URL || 'https://api.groq.com/openai/v1').replace(/\/$/, '')
-const MODEL = process.env.CHAT_MODEL || (FREE_KEY && !process.env.ANTHROPIC_API_KEY ? 'openai/gpt-oss-120b' : 'claude-opus-5-5')
+const MODEL = process.env.CHAT_MODEL || (FREE_KEY && !process.env.ANTHROPIC_API_KEY ? 'openai/gpt-oss-120b,openai/gpt-oss-20b' : 'claude-opus-5-5')
 const ALLOWED_ORIGINS = (process.env.CHAT_ALLOWED_ORIGINS || '').split(',').map((s) => s.trim()).filter(Boolean)
 const MAX_TURNS = 16, MAX_CHARS = 1200
 
@@ -35,16 +35,25 @@ let client                                        // created on first use, so a 
 
 // Streams an answer from any OpenAI-compatible chat API (Groq, Gemini, OpenRouter, ...) as plain text.
 async function streamOpenAICompatible(messages, res) {
-  const r = await fetch(`${FREE_URL}/chat/completions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${FREE_KEY}` },
-    body: JSON.stringify({
-      model: MODEL, stream: true, temperature: 0.3, max_tokens: 1200,
-      ...(MODEL.includes('gpt-oss') ? { reasoning_effort: 'low' } : {}),   // short reasoning: faster, fewer tokens
-      messages: [{ role: 'system', content: SYSTEM }, ...messages],
-    }),
-  })
-  if (!r.ok || !r.body) throw new Error(`provider ${r.status} ${(await r.text().catch(() => '')).slice(0, 300)}`)
+  // CHAT_MODEL may list several models (comma separated). Free-plan limits are per model, so when one is rate-limited
+  // or unavailable we simply try the next before anything has been sent to the visitor.
+  let r, lastErr = ''
+  for (const model of MODEL.split(',').map((m) => m.trim()).filter(Boolean)) {
+    r = await fetch(`${FREE_URL}/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${FREE_KEY}` },
+      body: JSON.stringify({
+        model, stream: true, temperature: 0.3, max_tokens: 700,
+        ...(model.includes('gpt-oss') ? { reasoning_effort: 'low' } : {}),   // short reasoning: faster, fewer tokens
+        messages: [{ role: 'system', content: SYSTEM }, ...messages],
+      }),
+    })
+    if (r.ok && r.body) break
+    lastErr = `provider ${r.status} (${model}) ${(await r.text().catch(() => '')).slice(0, 200)}`
+    console.error('chat:', lastErr)
+    if (![404, 408, 413, 429].includes(r.status) && r.status < 500) break
+  }
+  if (!r.ok || !r.body) throw new Error(lastErr)
   const decoder = new TextDecoder()
   let buf = ''
   for await (const chunk of r.body) {
