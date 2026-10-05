@@ -9,7 +9,7 @@ import { demoAnswer } from '../chat/demo'
 import owlEyes from '../assets/img/owl-head-eyes.webp'
 
 // POST endpoint that streams plain-text answers (api/chat.js on Vercel). Unset = demo mode.
-const ENDPOINT = import.meta.env.VITE_CHAT_ENDPOINT
+const ENDPOINT = import.meta.env.VITE_CHAT_ENDPOINT?.trim() // trim: a stray BOM/space in the env value must not break the URL
 const EASE = [0.16, 1, 0.3, 1]
 const TOKEN = /\[(contact|planner|whatsapp|careers|check|service:[a-z0-9-]+|work:[a-z0-9-]+)\]/g
 
