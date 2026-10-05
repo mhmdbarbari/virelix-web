@@ -42,7 +42,6 @@ export default function Hero({ ready }) {
         <motion.div className="hero-owl" style={{ y: owlY, scale: owlS }} initial={{ opacity: 0, scale: 0.9, filter: 'blur(14px)' }} animate={ready ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}} transition={{ duration: 1.4, ease: EASE, delay: 0.35 }}>
           <span className="hero-halo" />
           <OwlEyes />
-          <motion.p className="hero-eye-hint mono" initial={{ opacity: 0 }} animate={ready ? { opacity: 1 } : {}} transition={{ delay: 1.6 }}>{t.hero.eye}</motion.p>
         </motion.div>
       </div>
 
@@ -55,7 +54,6 @@ export default function Hero({ ready }) {
           ))}
         </div></div>
       </motion.div>
-      <a href="#about" className="hero-scroll mono" onClick={anchor}><span />{t.hero.scroll}</a>
     </section>
   )
 }
