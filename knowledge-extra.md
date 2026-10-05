@@ -4,10 +4,8 @@
   Only write things that are true: the assistant repeats them to customers as VIRELIX's own answers.
 
   Facts still worth adding (write the answer as a normal line below):
-  - Payment terms (deposit, milestones, methods)
-  - Working days (e.g. Sunday to Thursday)
-  - Do clients get the source code / ownership of everything?
-  - Price ranges for stores, apps, branding
+  - Price ranges for online stores, branding, web apps
+  - Accepted payment methods (cash, bank transfer, cards...)
   - Can people visit the office / book a meeting?
 -->
 
@@ -26,9 +24,12 @@
 - Marketing (social media, ads, AI campaigns, SEO) and photography/filming are priced according to the specific service requested; there is no single fixed price.
 - The minimum budget for advertising and for social media management is 150 JOD.
 - We cannot give a project timeline before we know the requirements. Once the visitor shares what they need (through the planner, the contact form or WhatsApp), we give a realistic timeline.
-- Working hours are 9:00 AM to 5:00 PM.
+- Working days are Sunday to Thursday, from 9:00 AM to 5:00 PM.
 - We work with clients outside Jordan as well as inside Jordan.
 - Hosting and the domain name are included for the first year only. After that they are renewed separately.
 - Website maintenance is offered as an annual subscription.
 - Revisions: up to 3 rounds of revisions are included in the agreed price. Additional revisions beyond that are priced separately.
+- Mobile apps for phones start from around 1000 JOD; the final price depends on the app's features.
+- Payment: 50% is paid before we start work, and the remaining 50% when the work is finished.
+- Ownership: the client can own the source code and project files if they ask for it.
 - For an exact quote, the visitor should use the project planner [planner] or contact us [contact] [whatsapp].
